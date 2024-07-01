@@ -22,7 +22,7 @@ app.use(express.json());
 
 // Rutas
 
-app.get("/probando", (req, res) => {
+app.get("/", (req, res) => {
     console.log("Se ha ejecutado el endpoint de prueba"); 
     
     return res.status(200).json({
