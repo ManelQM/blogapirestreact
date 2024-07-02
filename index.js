@@ -22,6 +22,10 @@ app.use(express.json());
 
 // Rutas
 
+const articleRouter = require("./routes/ArticleRouter"); 
+
+app.use("/theblog", articleRouter);
+
 app.get("/", (req, res) => {
     console.log("Se ha ejecutado el endpoint de prueba"); 
     
