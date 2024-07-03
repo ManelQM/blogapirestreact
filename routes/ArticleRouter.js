@@ -17,6 +17,6 @@ const uploads = multer({storage: imageStorage});
 
 router.get("/demoroute",ArticleController.test); 
 router.post("/createarticle",ArticleController.createArticle); 
-
+router.get("/getallarticles", ArticleController.getAllArticles);
 
 module.exports = router; 
