@@ -11,7 +11,7 @@ const test = (req, res) => {
 }; 
 
 // CREATE ARTICLE CONTROLLER
-const createArticle = async (reque, res) => {
+const createArticle = async (req, res) => {
     //Body params
     let newArticleParams = req.body;
 
@@ -30,8 +30,20 @@ const createArticle = async (reque, res) => {
     //Save in DB
  
     try{
+        const savedArticle = await article.save();
+        
+        return res.status(200).json({
+            status: "success",
+            article: savedArticle,
+            message: "Article created and saved",
+        });
 
-    } catch {
+    } catch (error) {
+        console.error("error saving article", error);
+        return res.status(400).json({
+            status: "error",
+            message: "Cant save the article",
+        });
 
     }
 }

@@ -16,7 +16,7 @@ filename: function(req, file, cb) {
 const uploads = multer({storage: imageStorage}); 
 
 router.get("/demoroute",ArticleController.test); 
-router.get("/createarticle",ArticleController.createArticle); 
+router.post("/createarticle",ArticleController.createArticle); 
 
 
 module.exports = router; 
