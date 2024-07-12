@@ -51,7 +51,9 @@ const createArticle = async (req, res) => {
 
 const getAllArticles = async (req, res) => {
     try{
-        let allArticleslist = await Article.find({}).exec();
+        let allArticleslist = await Article.find({})
+                                    .sort({date: -1})
+                                    .exec();
         
         if(!allArticleslist || allArticleslist.lenght === 0) {
             return res.status(404).json({
@@ -73,8 +75,17 @@ const getAllArticles = async (req, res) => {
     }
 }
 
+const getOneArticle = async (req, res) => {
+  try {
+
+  }catch{
+    
+  }
+}
+
 module.exports = {
   test,
   createArticle,
   getAllArticles,
+  getOneArticle, 
 };
