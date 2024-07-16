@@ -47,45 +47,57 @@ const createArticle = async (req, res) => {
   }
 };
 
-// GET ALL ARTICLES CONTROLLER 
+// GET ALL ARTICLES CONTROLLER
 
 const getAllArticles = async (req, res) => {
-    try{
-        let allArticleslist = await Article.find({})
-                                    .sort({date: -1})
-                                    .exec();
-        
-        if(!allArticleslist || allArticleslist.lenght === 0) {
-            return res.status(404).json({
-                status: "error",
-                message: "Cant show all articles list",
-            })
-        }
-        return res.status(200).json({
-            status: "success",
-            message: "All articles list => ",
-            articles: allArticleslist,
-        })
-    }catch(error) {
-        return res.status(500).json({
-            status: "error",
-            message: "Internal Server Error",
-        })
+  try {
+    let allArticleslist = await Article.find({})
 
+      .limit(5)
+      .sort({ date: -1 })
+      .exec();
+
+    if (!allArticleslist || allArticleslist.lenght === 0) {
+      return res.status(404).json({
+        status: "error",
+        message: "Cant show all articles list",
+      });
     }
-}
+    return res.status(200).json({
+      status: "success",
+      message: "All articles list => ",
+      articles: allArticleslist,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Internal Server Error",
+    });
+  }
+};
 
 const getOneArticle = async (req, res) => {
   try {
+    let idArticle = req.params.id; 
 
-  }catch{
-    
-  }
-}
+    const requestArticle = await Article.findById(idArticle); 
+    if (!requestArticle) {
+      return res.status(404).json({
+        status:"error",
+        message: "Cant find the article requested",
+      }); 
+    }
+    return res.status(200).json({
+      status: "success",
+      message:"Your requested article", 
+      article: requestArticle,
+    })
+  } catch {}
+};
 
 module.exports = {
   test,
   createArticle,
   getAllArticles,
-  getOneArticle, 
+  getOneArticle,
 };
