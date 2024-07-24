@@ -12,6 +12,7 @@ const test = (req, res) => {
 };
 
 // CREATE ARTICLE CONTROLLER
+
 const createArticle = async (req, res) => {
   //Body params
   let newArticleParams = req.body;
@@ -76,23 +77,57 @@ const getAllArticles = async (req, res) => {
   }
 };
 
+// GET ONE ARTICLE CONTROLLER
+
 const getOneArticle = async (req, res) => {
   try {
-    let idArticle = req.params.id; 
+    let idArticle = req.params.id;
 
-    const requestArticle = await Article.findById(idArticle); 
+    const requestArticle = await Article.findById(idArticle);
     if (!requestArticle) {
       return res.status(404).json({
-        status:"error",
+        status: "error",
         message: "Cant find the article requested",
-      }); 
+      });
     }
     return res.status(200).json({
       status: "success",
-      message:"Your requested article", 
+      message: "Your requested article",
       article: requestArticle,
-    })
-  } catch {}
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Internal Server Error",
+    });
+  }
+};
+
+// DELETE ONE ARTICLE
+
+const deleteArticle = async (req, res) => {
+  try {
+    let idArticle = req.params.id;
+    const deleteArticle = await Article.findOneAndDelete({_id: idArticle});
+
+    if (!deleteArticle) {
+      return res.status(400).json({
+        status: "error",
+        message: "Cant find the article for erase",
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "This article had been erased =>",
+      deleted: deleteArticle,
+    });
+  } catch {
+    return res.status(500).json({
+      status: "error",
+      message: "Internal Server Error",
+    });
+  }
 };
 
 module.exports = {
@@ -100,4 +135,5 @@ module.exports = {
   createArticle,
   getAllArticles,
   getOneArticle,
+  deleteArticle,
 };

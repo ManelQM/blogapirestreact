@@ -17,6 +17,7 @@ const uploads = multer({storage: imageStorage});
 
 router.get("/demoroute",ArticleController.test); 
 router.post("/createarticle",ArticleController.createArticle); 
-router.get("/getallarticles", ArticleController.getAllArticles);
-router.get("/getonearticle/:id",ArticleController.getOneArticle); 
+router.get("/getallarticles",ArticleController.getAllArticles);
+router.get("/getonearticle/:id",ArticleController.getOneArticle);
+router.delete("/deletearticle/:id",ArticleController.deleteArticle); 
 module.exports = router; 
