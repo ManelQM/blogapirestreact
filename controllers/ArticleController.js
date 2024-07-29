@@ -116,7 +116,6 @@ const deleteArticle = async (req, res) => {
         message: "Cant find the article for erase",
       });
     }
-
     return res.status(200).json({
       status: "success",
       message: "This article had been erased =>",
@@ -130,10 +129,62 @@ const deleteArticle = async (req, res) => {
   }
 };
 
+const updateArticle = async (req, res) => {
+
+  // BODY AND PARAMS DATA 
+  let idArticle = req.params.id; 
+    let updateBody = req.body; 
+
+  // VALIDATE BODY DATA FOR UPDATE
+  try{
+    validate(res, updateBody); 
+  }catch{
+    return res.status(400).json({
+      status: "error",
+      message: "Please complete the required fields",
+    });
+  }
+
+// FIND ID PARAMS IN DB AND UPDATE
+  try{
+    const findAndUpdate = await Article.findOneAndUpdate(
+      {_id: idArticle},
+      updateBody,
+      {new:true} // THIS OPTION RETURNS THE MODIFIED DOCUMENT RATHER THAN THE ORIGINAL BEFORE UPDATING!!!!
+    );
+    if (!findAndUpdate) {
+      return res.status(404).json({
+        status:"error",
+        message: "Cant find the article"
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Your article has been updated",
+      newUpdatedArticle: findAndUpdate,
+    })
+  }catch{
+    return res.status(400).json({
+      status: "error",
+      message: "Internal Server Error",
+    })
+  }
+}; 
+
+const uplodadImage = async (req,res) => {
+  try{
+    
+  }catch{
+
+  }
+}
+
 module.exports = {
   test,
   createArticle,
   getAllArticles,
   getOneArticle,
   deleteArticle,
+  updateArticle,
+  uplodadImage,
 };
